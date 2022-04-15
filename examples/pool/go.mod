@@ -1,10 +1,10 @@
-module github.com/daoleno/uniswapv3-sdk/examples/pool
+module github.com/coderbradlee/uniswapv3-sdk/examples/pool
 
 go 1.17
 
 require (
 	github.com/daoleno/uniswap-sdk-core v0.1.1
-	github.com/daoleno/uniswapv3-sdk v0.0.2
+	github.com/coderbradlee/uniswapv3-sdk v0.0.2
 	github.com/ethereum/go-ethereum v1.10.12
 )
 
