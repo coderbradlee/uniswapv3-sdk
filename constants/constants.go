@@ -26,6 +26,29 @@ const (
 	FeeMax FeeAmount = 1000000
 )
 
+type FeePair struct {
+	Fee0 FeeAmount
+	Fee1 FeeAmount
+}
+
+var (
+	Fees     = []FeeAmount{FeeLow, FeeMedium, FeeHigh}
+	FeePairs = make([]FeePair, 0)
+)
+
+func init() {
+	for i := 0; i < len(Fees); i++ {
+		for j := 0; j < len(Fees); j++ {
+			if i != j {
+				FeePairs = append(FeePairs, FeePair{
+					Fee0: Fees[i],
+					Fee1: Fees[j],
+				})
+			}
+		}
+	}
+}
+
 // The default factory tick spacings by fee amount.
 var TickSpacings = map[FeeAmount]int{
 	FeeLowest: 1,
