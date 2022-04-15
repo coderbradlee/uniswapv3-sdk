@@ -34,6 +34,7 @@ type FeePair struct {
 
 var (
 	Fees     = []FeeAmount{FeeLow, FeeMedium, FeeHigh}
+	FeesInt  = []int{int(FeeLow), int(FeeMedium), int(FeeHigh)}
 	FeePairs = make([]FeePair, 0)
 )
 
@@ -70,19 +71,19 @@ var (
 	PercentZero = entities.NewFraction(big.NewInt(0), big.NewInt(1))
 )
 
-func GetFeePermutations(n int) (result [][]FeeAmount, err error) {
+func GetFeePermutations(n int) (result [][]int, err error) {
 	if n == 0 || n > 3 {
 		err = errors.New("n invalid")
 		return
 	}
-	result = make([][]FeeAmount, 0)
-	generatePermutations(Fees, n, &result)
+	result = make([][]int, 0)
+	generatePermutations(FeesInt, n, &result)
 	return
 }
 
-func generatePermutations(array []FeeAmount, n int, result *[][]FeeAmount) {
+func generatePermutations(array []int, n int, result *[][]int) {
 	if n == 1 {
-		dst := make([]FeeAmount, len(array))
+		dst := make([]int, len(array))
 		copy(dst, array[:])
 		*result = append(*result, dst)
 	} else {
