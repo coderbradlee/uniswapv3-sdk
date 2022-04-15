@@ -76,25 +76,34 @@ func GetFeePermutations(n int) (result [][]int, err error) {
 		err = errors.New("n invalid")
 		return
 	}
-	result = make([][]int, 0)
-	generatePermutations(FeesInt, n, &result)
+	result = Permutations(FeesInt, n)
 	return
 }
 
-func generatePermutations(array []int, n int, result *[][]int) {
-	if n == 1 {
-		dst := make([]int, len(array))
-		copy(dst, array[:])
-		*result = append(*result, dst)
+func Permutations(L []int, r int) [][]int {
+	if r == 1 {
+		//Convert every item in L to List and
+		//Append it to List of List
+		temp := make([][]int, 0)
+		for _, rr := range L {
+			t := make([]int, 0)
+			t = append(t, rr)
+			temp = append(temp, [][]int{t}...)
+		}
+		return temp
 	} else {
-		for i := 0; i < n; i++ {
-			generatePermutations(array, n-1, result)
-			if n%2 == 0 {
-				// Golang allow us to do multiple assignments
-				array[0], array[n-1] = array[n-1], array[0]
-			} else {
-				array[i], array[n-1] = array[n-1], array[i]
+		res := make([][]int, 0)
+		for i := 0; i < len(L); i++ {
+			//Create List Without L[i] element
+			perms := make([]int, 0)
+			perms = append(perms, L[:i]...)
+			perms = append(perms, L[i+1:]...)
+			//Call recursively to Permutations
+			for _, x := range Permutations(perms, r-1) {
+				t := append(x, L[i])
+				res = append(res, [][]int{t}...)
 			}
 		}
+		return res
 	}
 }

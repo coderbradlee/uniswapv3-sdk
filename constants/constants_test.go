@@ -9,8 +9,12 @@ func TestT(t *testing.T) {
 	//for _, p := range FeePairs {
 	//	fmt.Println(p.Fee0, p.Fee1)
 	//}
-	result := make([][]FeeAmount, 0)
-	generatePermutations(Fees, 3, &result)
+	//result := make([][]int, 0)
+	result, err := GetFeePermutations(2)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 	for _, r := range result {
 		for _, tt := range r {
 			fmt.Printf("%d ", tt)
