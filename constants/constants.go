@@ -1,6 +1,7 @@
 package constants
 
 import (
+	"errors"
 	"math/big"
 
 	"github.com/daoleno/uniswap-sdk-core/entities"
@@ -68,3 +69,31 @@ var (
 
 	PercentZero = entities.NewFraction(big.NewInt(0), big.NewInt(1))
 )
+
+func GetFeePermutations(n int) (result [][]FeeAmount, err error) {
+	if n == 0 || n > 3 {
+		err = errors.New("n invalid")
+		return
+	}
+	result = make([][]FeeAmount, 0)
+	generatePermutations(Fees, n, &result)
+	return
+}
+
+func generatePermutations(array []FeeAmount, n int, result *[][]FeeAmount) {
+	if n == 1 {
+		dst := make([]FeeAmount, len(array))
+		copy(dst, array[:])
+		*result = append(*result, dst)
+	} else {
+		for i := 0; i < n; i++ {
+			generatePermutations(array, n-1, result)
+			if n%2 == 0 {
+				// Golang allow us to do multiple assignments
+				array[0], array[n-1] = array[n-1], array[0]
+			} else {
+				array[i], array[n-1] = array[n-1], array[i]
+			}
+		}
+	}
+}
