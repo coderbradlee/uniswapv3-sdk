@@ -10,7 +10,7 @@ func TestT(t *testing.T) {
 	//	fmt.Println(p.Fee0, p.Fee1)
 	//}
 	//result := make([][]int, 0)
-	result, err := GetFeePermutations(2)
+	result, err := GetFeePermutations(1)
 	if err != nil {
 		fmt.Println(err)
 		return
